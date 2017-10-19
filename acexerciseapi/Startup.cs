@@ -16,9 +16,12 @@ namespace acexerciseapi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Startup.DBConnectionString = Configuration.GetConnectionString("DefaultConnection");
         }
 
         public IConfiguration Configuration { get; }
+        internal static String DBConnectionString { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
