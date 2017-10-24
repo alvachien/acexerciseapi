@@ -110,7 +110,7 @@ namespace acexerciseapi.Controllers
                 await conn.OpenAsync();
 
                 queryString = @"INSERT INTO[dbo].[t_extype] ([NAME],[DETAILS]) VALUES ( @NAME, @DETAILS );
-                SELECT @Identity = SCOPE_IDENTITY();";
+                    SELECT @Identity = SCOPE_IDENTITY();";
 
                 SqlCommand cmd = new SqlCommand(queryString, conn);
                 cmd.Parameters.AddWithValue("@NAME", vm.Name);
