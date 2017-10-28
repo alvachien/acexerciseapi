@@ -1,4 +1,9 @@
-﻿using System;
+﻿#if DEBUG
+#else
+#define USE_ALIYUN
+#endif
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +36,7 @@ namespace acexerciseapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +46,30 @@ namespace acexerciseapi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+#if DEBUG
+                builder.WithOrigins(
+                    "http://localhost:4500",
+                    "https://localhost:4500"
+                    )
+#else
+#if USE_MICROSOFTAZURE
+                builder.WithOrigins(
+                    "http://achihui.azurewebsites.net",
+                    "https://achihui.azurewebsites.net"
+                    )
+#elif USE_ALIYUN
+                builder.WithOrigins(
+                    "http://118.178.58.187:5200",
+                    "https://118.178.58.187:5200"
+                    )
+#endif
+#endif
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                );
 
             app.UseMvc();
         }
