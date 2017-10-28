@@ -17,7 +17,11 @@ namespace acexerciseapi
         {
             Configuration = configuration;
 
-            Startup.DBConnectionString = Configuration.GetConnectionString("DefaultConnection");
+#if DEBUG
+            Startup.DBConnectionString = Configuration.GetConnectionString("DebugConnection");
+#else
+            Startup.DBConnectionString = Configuration.GetConnectionString("AliyunConnection");
+#endif
         }
 
         public IConfiguration Configuration { get; }
